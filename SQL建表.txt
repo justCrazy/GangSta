@@ -1,0 +1,164 @@
+-- Create table
+create table GANGSTAFILE
+(
+  email        VARCHAR2(25),
+  filename     VARCHAR2(255) not null,
+  fsize        NUMBER(24) not null,
+  uploaddate   DATE not null,
+  downloaddate DATE,
+  shareverify  VARCHAR2(100)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table GANGSTAFILE
+  add constraint FK_GANGSTAF_GANGSTAFK_GANG4 foreign key (EMAIL)
+  references GANGSTAPERSON (EMAIL) on delete cascade;
+
+-- Create table
+create table GANGSTAFILETABLE
+(
+  email VARCHAR2(25),
+  fpath VARCHAR2(100) not null,
+  fsize NUMBER(24) not null
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table GANGSTAFILETABLE
+  add constraint PK_GANGSTAFILETABLE primary key (FPATH)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+alter table GANGSTAFILETABLE
+  add constraint F_PPP foreign key (EMAIL)
+  references GANGSTAPERSON (EMAIL) on delete cascade;
+
+-- Create table
+create table GANGSTANOTICE
+(
+  title      VARCHAR2(50) not null,
+  content    VARCHAR2(600) not null,
+  updatedate DATE not null,
+  author     VARCHAR2(25) not null,
+  url        VARCHAR2(50)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+
+-- Create table
+create table GANGSTAPERSON
+(
+  name     VARCHAR2(25) not null,
+  email    VARCHAR2(25) not null,
+  password VARCHAR2(30) not null,
+  identity NUMBER,
+  verify   VARCHAR2(100),
+  state    NUMBER
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table GANGSTAPERSON
+  add constraint PK_GANGSTAPERSON primary key (EMAIL)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+
+-- Create table
+create table GANGSTATEMP
+(
+  t_email  VARCHAR2(25),
+  t_verify VARCHAR2(25)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+
+-- Add/modify columns 
+alter table GangStaFile modify "filename" VARCHAR2(25);
+-- Drop primary, unique and foreign key constraints 
+alter table GANGSTAFILE
+  drop constraint FK_GANGSTAF_GANGSTAFK_GANG4;
+
+-- Drop primary, unique and foreign key constraints 
+alter table GANGSTAFILETABLE
+  drop constraint PK_GANGSTAFILETABLE cascade;
+alter table GANGSTAFILETABLE
+  drop constraint F_PPP;
+
+-- Create table
+create table GangStaNotice
+(
+  "title"      VARCHAR2(50) not null,
+  "content"    VARCHAR2(600) not null,
+  "updatedate" DATE not null,
+  "author"     VARCHAR2(25) not null,
+  "url"        VARCHAR2(50)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255;
